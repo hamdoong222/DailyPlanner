@@ -32,4 +32,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //TODO : 이곳에서 작성한 정보를 저장
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
