@@ -1,29 +1,39 @@
 package com.goldfish.dailyplanner;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.goldfish.dailyplanner.dao.AppDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.goldfish.dailyplanner.dao.Database;
 import com.goldfish.dailyplanner.model.Subject;
-import com.goldfish.dailyplanner.util.TimeUtil;
 
-import java.util.ArrayList;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private Database database;
     private LinearLayout linearLayout;
+    private TextView Year;
+    private TextView Month;
+    private TextView Week;
+    private TextView Date;
+    private TextView Day;
+    private TextView Percent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_LONG).show();
             }
         });
-
-        linearLayout = findViewById(R.id.layout6);
-
-        int len = linearLayout.getChildCount();
-
-        for(int index=0 ; index<len ; index++){
-            ImageView img = (ImageView) linearLayout.getChildAt(index);
-            img.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    fillUp(linearLayout.indexOfChild(v));
-                }
-            });
-        }
+        setNow();
     }
 
     void fillUp(int partition){
+        Percent = findViewById(R.id.percent);
+        String per = Integer.toString((partition+1)*10) + "%";
+        Percent.setText(per);
         int len = linearLayout.getChildCount();
-        for(int index = 0 ; index<len ; index++){
+        for(int index = 0 ; index<len-1 ; index++){
             if(index <= partition){
                 ImageView fill = (ImageView) linearLayout.getChildAt(index);
                 switch (index){
@@ -99,6 +100,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void setNow(){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        linearLayout = findViewById(R.id.layout6);
+        int len = linearLayout.getChildCount();
+        for(int index=0 ; index<len-1 ; index++){
+            ImageView img = (ImageView) linearLayout.getChildAt(index);
+            img.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    fillUp(linearLayout.indexOfChild(v));
+                }
+            });
+        }
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH)+1;
+        int date = Calendar.getInstance().get(Calendar.DATE);
+        int week = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH);
+
+        Year = findViewById(R.id.year);
+        Month = findViewById(R.id.month);
+        Date = findViewById(R.id.date);
+        Week = findViewById(R.id.week);
+        Day = findViewById(R.id.day);
+
+        Year.setText(Integer.toString(year));
+        Month.setText(Integer.toString(month));
+        Date.setText(Integer.toString(date));
+        Week.setText(Integer.toString(week));
+        Day.setText(dayOfTheWeek);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,5 +149,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
     }
 }
