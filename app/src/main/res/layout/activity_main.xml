@@ -107,7 +107,7 @@
                 android:id="@+id/layout3"
                 android:layout_marginTop="50dp"
                 android:layout_below="@id/layout2"
-                android:background="@android:color/holo_blue_light"
+                android:background="#9cdae5"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content">
                 <TextView
@@ -124,7 +124,7 @@
                 android:orientation="vertical"
                 android:layout_below="@id/layout3"
                 android:layout_width="400dp"
-                android:layout_height="wrap_content">
+                android:layout_height="35dp">
 
                 <include layout="@layout/layout_todo_item"/>
                 <include layout="@layout/layout_todo_item"/>
@@ -132,7 +132,7 @@
                 <include layout="@layout/layout_todo_item"/>
             </LinearLayout>
             <LinearLayout
-                android:background="@android:color/holo_blue_light"
+                android:background="#9cdae5"
                 android:layout_marginTop="50dp"
                 android:layout_below="@id/layout4"
                 android:id="@+id/layout41"
@@ -168,7 +168,7 @@
                 android:orientation="vertical"
                 android:layout_below="@id/layout41"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="35dp">
 
                 <include layout="@layout/layout_subject_item"/>
                 <include layout="@layout/layout_subject_item"/>
