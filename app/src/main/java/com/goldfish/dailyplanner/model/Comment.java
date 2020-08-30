@@ -13,12 +13,6 @@ public class Comment {
     private String content;
     private Date time;
 
-    @Ignore
-    public Comment(String content, Date time) {
-        this.content = content;
-        this.time = time;
-    }
-
     public Comment(int id, String content) {
         this.id = id;
         this.content = content;

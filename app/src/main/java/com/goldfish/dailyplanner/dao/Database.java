@@ -35,11 +35,20 @@ public class Database {
         return uniqueInstance;
     }
 
-    public void insertSubject(final Subject subject) {
+    public void insertSubjectList(final Subject subject) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 appDatabase.subjectDao().insertSubject(subject);
+            }
+        }).start();
+    }
+
+    public void insertSubjectList(final List<Subject> subject) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.subjectDao().insertSubjectList(subject);
             }
         }).start();
     }
@@ -49,6 +58,15 @@ public class Database {
             @Override
             public void run() {
                 appDatabase.subjectDao().deleteSubject(subject);
+            }
+        }).start();
+    }
+
+    public void deleteSubject(final int id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.subjectDao().deleteSubject(id);
             }
         }).start();
     }
@@ -83,11 +101,20 @@ public class Database {
         }).start();
     }
 
-    public void insertTodo(final Todo todo) {
+    public void insertTodoList(final Todo todo) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 appDatabase.todoDao().insertTodo(todo);
+            }
+        }).start();
+    }
+
+    public void insertTodoList(final List<Todo> todoList) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.todoDao().insertTodoList(todoList);
             }
         }).start();
     }
@@ -97,6 +124,15 @@ public class Database {
             @Override
             public void run() {
                 appDatabase.todoDao().deleteTodo(todo);
+            }
+        }).start();
+    }
+
+    public void deleteTodo(final int id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.todoDao().deleteTodo(id);
             }
         }).start();
     }

@@ -1,24 +1,29 @@
 package com.goldfish.dailyplanner;
 
 import android.content.Context;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.goldfish.dailyplanner.dao.Database;
 import com.goldfish.dailyplanner.model.Subject;
+import com.goldfish.dailyplanner.model.Todo;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,20 +46,66 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         database = Database.getInstance(this);
 
-        database.insertSubject(new Subject(1, "test", "test", true));
+        linearLayout = findViewById(R.id.layout6);
 
-        database.getSubjectList(new Database.ResultCallBack<List<Subject>>() {
+        initButton();
+
+        loadSubject();
+        loadTodo();
+
+        setNow();
+    }
+
+    private void initButton() {
+        View todoLayout = findViewById(R.id.layout_todo_button);
+        View subjectLayout = findViewById(R.id.layout_subject_button);
+
+        Button todoRemoveBtn = todoLayout.findViewById(R.id.remove);
+        Button todoAddBtn = todoLayout.findViewById(R.id.add);
+
+        Button subjectRemoveBtn = subjectLayout.findViewById(R.id.remove);
+        Button subjectAddBtn = subjectLayout.findViewById(R.id.add);
+
+        todoRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run(List<Subject> result) {
-                Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_LONG).show();
+            public void onClick(View view) {
+                database.insertTodoList(createTodoFromView());
+                database.deleteTodo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount());
+                loadTodo();
             }
         });
-        setNow();
+
+        todoAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.insertTodoList(createTodoFromView());
+                database.insertTodoList(new Todo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount() + 1, false, ""));
+                loadTodo();
+            }
+        });
+
+        subjectAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.insertSubjectList(createSubjectFromView());
+                database.insertSubjectList(new Subject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount() + 1, "", "", false));
+                loadSubject();
+            }
+        });
+
+        subjectRemoveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.insertSubjectList(createSubjectFromView());
+                database.deleteSubject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount());
+                loadSubject();
+            }
+        });
     }
 
     void fillUp(int partition){
         Percent = findViewById(R.id.percent);
-        String per = Integer.toString((partition+1)*10) + "%";
+        String per = (partition + 1) * 10 + "%";
         Percent.setText(per);
         int len = linearLayout.getChildCount();
         for(int index = 0 ; index<len-1 ; index++){
@@ -143,7 +194,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //TODO : 이곳에서 작성한 정보를 저장
+        database.insertTodoList(createTodoFromView());
+        database.insertSubjectList(createSubjectFromView());
     }
 
     @Override
@@ -167,4 +219,80 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent( event );
     }
+
+    private void loadSubject() {
+        database.getSubjectList(new Database.ResultCallBack<List<Subject>>() {
+            @Override
+            public void run(List<Subject> result) {
+                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.subject_layout);
+                linearLayout.removeAllViews();
+
+                for (Subject subject : result) {
+                    RelativeLayout subjectLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_subject_item, null);
+                    linearLayout.addView(subjectLayout);
+
+                    TextView subjectTextView = subjectLayout.findViewById(R.id.subject);
+                    TextView goalTextView = subjectLayout.findViewById(R.id.goal);
+                    CheckBox checkBox = subjectLayout.findViewById(R.id.checkbox);
+
+                    subjectTextView.setText(subject.getSubject());
+                    goalTextView.setText(subject.getContent());
+                    checkBox.setChecked(subject.isChecked());
+                }
+            }
+        });
+    }
+
+    private void loadTodo() {
+        database.getTodoList(new Database.ResultCallBack<List<Todo>>() {
+            @Override
+            public void run(List<Todo> result) {
+                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.todo_layout);
+                linearLayout.removeAllViews();
+
+                for (Todo todo : result) {
+                    RelativeLayout todoLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_todo_item, null);
+                    linearLayout.addView(todoLayout);
+
+                    TextView contentTextView = todoLayout.findViewById(R.id.content);
+                    CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
+
+                    contentTextView.setText(todo.getContent());
+                    checkBox.setChecked(todo.isChecked());
+                }
+            }
+        });
+    }
+
+    private List<Todo> createTodoFromView() {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.todo_layout);
+        List<Todo> todoList = new ArrayList<>();
+        for (int index = 0; index < linearLayout.getChildCount(); index++) {
+            RelativeLayout todoLayout = (RelativeLayout) linearLayout.getChildAt(index);
+
+            TextView contentTextView = todoLayout.findViewById(R.id.content);
+            CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
+
+            todoList.add(new Todo(index + 1, checkBox.isChecked(), contentTextView.getText().toString()));
+        }
+
+        return todoList;
+    }
+
+    private List<Subject> createSubjectFromView() {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.subject_layout);
+        List<Subject> subjectList = new ArrayList<>();
+        for (int index = 0; index < linearLayout.getChildCount(); index++) {
+            RelativeLayout todoLayout = (RelativeLayout) linearLayout.getChildAt(index);
+
+            TextView subjectTextView = todoLayout.findViewById(R.id.subject);
+            TextView goalTextView = todoLayout.findViewById(R.id.goal);
+            CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
+
+            subjectList.add(new Subject(index + 1, subjectTextView.getText().toString(), goalTextView.getText().toString(), checkBox.isChecked()));
+        }
+
+        return subjectList;
+    }
+
 }

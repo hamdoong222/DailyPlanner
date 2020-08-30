@@ -18,8 +18,14 @@ public interface SubjectDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSubject(Subject subject);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertSubjectList(List<Subject> subjectList);
+
     @Delete
     void deleteSubject(Subject subject);
+
+    @Query("DELETE FROM Subject WHERE id=:id")
+    void deleteSubject(int id);
 
     @Query("SELECT * FROM Subject")
     List<Subject> getSubjectList();

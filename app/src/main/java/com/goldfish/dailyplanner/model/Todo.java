@@ -14,13 +14,6 @@ public class Todo {
     private String content;
     private Date time;
 
-    @Ignore
-    public Todo(boolean checked, String content, Date time) {
-        this.checked = checked;
-        this.content = content;
-        this.time = time;
-    }
-
     public Todo(int id, boolean checked, String content) {
         this.id = id;
         this.checked = checked;

@@ -15,14 +15,6 @@ public class Subject {
     private boolean checked;
     private Date time;
 
-    @Ignore
-    public Subject(String subject, String content, boolean checked, Date time) {
-        this.subject = subject;
-        this.content = content;
-        this.checked = checked;
-        this.time = time;
-    }
-
     public Subject(int id, String subject, String content, boolean checked) {
         this.id = id;
         this.subject = subject;
