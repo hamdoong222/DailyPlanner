@@ -124,7 +124,7 @@
                 android:orientation="vertical"
                 android:layout_below="@id/layout3"
                 android:layout_width="400dp"
-                android:layout_height="35dp">
+                android:layout_height="wrap_content">
 
                 <include layout="@layout/layout_todo_item"/>
                 <include layout="@layout/layout_todo_item"/>
@@ -167,8 +167,8 @@
                 android:id="@+id/layout42"
                 android:orientation="vertical"
                 android:layout_below="@id/layout41"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp">
+                android:layout_width="400dp"
+                android:layout_height="wrap_content">
 
                 <include layout="@layout/layout_subject_item"/>
                 <include layout="@layout/layout_subject_item"/>
