@@ -22,6 +22,6 @@ public interface TodoDao {
     @Query("SELECT * FROM Todo")
     List<Todo> getTodoList();
 
-    @Query("SELECT * FROM Todo WHERE date BETWEEN :from AND :to")
+    @Query("SELECT * FROM Todo WHERE time BETWEEN :from AND :to")
     List<Todo> getTodoList(Date from, Date to);
 }

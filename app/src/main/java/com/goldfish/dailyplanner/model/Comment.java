@@ -7,27 +7,21 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Subject {
+public class Comment {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String subject;
     private String content;
-    private boolean checked;
     private Date time;
 
     @Ignore
-    public Subject(String subject, String content, boolean checked, Date time) {
-        this.subject = subject;
+    public Comment(String content, Date time) {
         this.content = content;
-        this.checked = checked;
         this.time = time;
     }
 
-    public Subject(int id, String subject, String content, boolean checked) {
+    public Comment(int id, String content) {
         this.id = id;
-        this.subject = subject;
         this.content = content;
-        this.checked = checked;
         this.time = new Date();
     }
 
@@ -47,27 +41,11 @@ public class Subject {
         this.id = id;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
     }
 }

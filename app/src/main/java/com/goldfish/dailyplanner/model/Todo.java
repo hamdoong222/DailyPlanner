@@ -1,34 +1,39 @@
 package com.goldfish.dailyplanner.model;
 
-import com.goldfish.dailyplanner.dao.Converters;
-
 import java.util.Date;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 @Entity
 public class Todo {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private boolean checked;
     private String content;
-    private Date date;
+    private Date time;
+
+    @Ignore
+    public Todo(boolean checked, String content, Date time) {
+        this.checked = checked;
+        this.content = content;
+        this.time = time;
+    }
 
     public Todo(int id, boolean checked, String content) {
         this.id = id;
         this.checked = checked;
         this.content = content;
-        this.date = new Date();
+        this.time = new Date();
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public int getId() {

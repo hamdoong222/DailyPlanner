@@ -24,7 +24,7 @@ public interface SubjectDao {
     @Query("SELECT * FROM Subject")
     List<Subject> getSubjectList();
 
-    @Query("SELECT * FROM Subject WHERE date BETWEEN :from AND :to")
-    List<Subject> getTodoList(Date from, Date to);
+    @Query("SELECT * FROM Subject WHERE time BETWEEN :from AND :to")
+    List<Subject> getSubjectList(Date from, Date to);
 
 }

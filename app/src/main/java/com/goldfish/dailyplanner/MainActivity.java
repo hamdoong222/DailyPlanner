@@ -9,7 +9,9 @@ import android.widget.Toast;
 import com.goldfish.dailyplanner.dao.AppDatabase;
 import com.goldfish.dailyplanner.dao.Database;
 import com.goldfish.dailyplanner.model.Subject;
+import com.goldfish.dailyplanner.util.TimeUtil;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         database.insertSubject(new Subject(1, "test", "test", true));
 
-        database.getSubjectList(new Date(2019, 8, 29), new Date(2021, 8, 30), new Database.ResultCallBack<List<Subject>>() {
+        database.getSubjectList(new Database.ResultCallBack<List<Subject>>() {
             @Override
             public void run(List<Subject> result) {
                 Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_LONG).show();

@@ -1,10 +1,10 @@
 package com.goldfish.dailyplanner.dao;
 
 import android.app.Activity;
-import android.content.Context;
 
-import com.goldfish.dailyplanner.R;
+import com.goldfish.dailyplanner.model.Comment;
 import com.goldfish.dailyplanner.model.Subject;
+import com.goldfish.dailyplanner.model.Todo;
 
 import java.util.Date;
 import java.util.List;
@@ -72,11 +72,92 @@ public class Database {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Subject> subjectList = appDatabase.subjectDao().getTodoList(from, to);
+                final List<Subject> subjectList = appDatabase.subjectDao().getSubjectList(from, to);
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         callBack.run(subjectList);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void insertTodo(final Todo todo) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.todoDao().insertTodo(todo);
+            }
+        }).start();
+    }
+
+    public void deleteTodo(final Todo todo) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.todoDao().deleteTodo(todo);
+            }
+        }).start();
+    }
+
+    public void getTodoList(final ResultCallBack<List<Todo>> callBack) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Todo> todoList = appDatabase.todoDao().getTodoList();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.run(todoList);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void getTodoList(final Date from, final Date to, final ResultCallBack<List<Todo>> callBack) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Todo> todoList = appDatabase.todoDao().getTodoList(from, to);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.run(todoList);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void insertComment(final Comment comment) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.commentDao().insertComment(comment);
+            }
+        }).start();
+    }
+
+    public void deleteComment(final Comment comment) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.commentDao().deleteComment(comment);
+            }
+        }).start();
+    }
+
+    public void getComment(final Date from, final Date to, final ResultCallBack<Comment> callBack) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Comment comment = appDatabase.commentDao().getComment(from, to);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.run(comment);
                     }
                 });
             }
