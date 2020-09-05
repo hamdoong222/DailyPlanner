@@ -1,10 +1,8 @@
-package com.goldfish.dailyplanner.dao;
+package com.goldfish.dailyplanner.db.dao;
 
 import com.goldfish.dailyplanner.model.Comment;
-import com.goldfish.dailyplanner.model.Todo;
 
 import java.util.Date;
-import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.goldfish.dailyplanner.dao.Database;
+import com.goldfish.dailyplanner.db.dao.Database;
 import com.goldfish.dailyplanner.model.Subject;
 import com.goldfish.dailyplanner.model.Todo;
 

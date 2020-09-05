@@ -1,4 +1,4 @@
-package com.goldfish.dailyplanner.dao;
+package com.goldfish.dailyplanner.db.dao;
 
 import android.app.Activity;
 
