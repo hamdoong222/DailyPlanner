@@ -17,6 +17,8 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -81,9 +83,14 @@
                     android:textSize="40dp"
                     android:textStyle="bold" />
             </LinearLayout>
-
+            <View
+                android:layout_marginLeft="10dp"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
             <LinearLayout
                 android:id="@+id/layout2"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout1"
@@ -125,17 +132,23 @@
                     android:textSize="35dp"
                     android:textStyle="bold" />
             </LinearLayout>
-
+            <View
+                android:layout_marginLeft="10dp"
+                android:layout_width="250dp"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
             <include
                 android:id="@+id/layout_todo_button"
                 layout="@layout/layout_add_remove_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp" />
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="25dp"/>
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:id="@+id/layout3"
-                android:layout_width="400dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout2"
                 android:background="#9cdae5">
@@ -146,11 +159,12 @@
                     android:layout_marginLeft="10dp"
                     android:text="To do list"
                     android:textColor="@android:color/black"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:id="@+id/todo_layout"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
@@ -163,11 +177,13 @@
                 layout="@layout/layout_add_remove_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp" />
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="25dp"/>
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:id="@+id/layout41"
-                android:layout_width="400dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/todo_layout"
                 android:background="#9cdae5">
@@ -193,7 +209,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="160dp"
+                    android:layout_marginLeft="180dp"
                     android:text="Check"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
@@ -201,6 +217,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:id="@+id/subject_layout"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
@@ -234,55 +251,87 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:padding="1dp" />
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image" />
+
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:background="@drawable/border_image"/>
 
                 <TextView
                     android:gravity="center_vertical"
@@ -294,7 +343,6 @@
                     android:textSize="20dp"
                     android:textStyle="italic" />
             </LinearLayout>
-
             <RelativeLayout
                 android:id="@+id/layout7"
                 android:layout_width="wrap_content"
@@ -303,7 +351,7 @@
                 android:layout_marginTop="30dp">
 
                 <EditText
-                    android:layout_width="match_parent"
+                    android:layout_width="380dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/comment"
                     android:layout_marginLeft="10dp" />
@@ -318,22 +366,6 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
             </RelativeLayout>
-
-            <View
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
-            <View
-                android:layout_width="250dp"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
-
-
-
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>
