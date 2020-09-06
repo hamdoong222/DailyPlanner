@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
@@ -82,10 +82,16 @@
                     android:textColor="@android:color/black"
                     android:textSize="40dp"
                     android:textStyle="bold" />
+                <ImageView
+                    android:onClick="onClickCalendar"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@android:drawable/ic_menu_my_calendar"/>
             </LinearLayout>
             <View
                 android:layout_marginLeft="10dp"
-                android:layout_width="300dp"
+                android:layout_width="330dp"
                 android:layout_height="1dp"
                 android:background="@android:color/black" />
             <LinearLayout
@@ -131,13 +137,6 @@
                     android:textColor="@android:color/holo_blue_dark"
                     android:textSize="35dp"
                     android:textStyle="bold" />
-
-                <ImageView
-                    android:onClick="onClickCalendar"
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@android:drawable/ic_menu_my_calendar"/>
             </LinearLayout>
             <View
                 android:layout_marginLeft="10dp"
@@ -374,7 +373,6 @@
                         android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:cropToPadding="true"/>
-
                 </LinearLayout>
             </LinearLayout>
             <RelativeLayout

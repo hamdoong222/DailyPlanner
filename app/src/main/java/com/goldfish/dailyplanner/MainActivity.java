@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //addMob
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -80,10 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.layout6);
 
-
         initButton();
-
         initViews();
+
     }
 
     private void initViews() {
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         String per = (partition + 1) * 10 + "%";
         Percent.setText(per);
         int len = linearLayout.getChildCount();
-        for(int index = 0 ; index<len ; index++){
+        for(int index = 0 ; index < len ; index++){
             if(index <= partition){
                 ImageView fill = (ImageView) linearLayout.getChildAt(index);
                 switch (index){
@@ -190,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
                         fill.setBackgroundColor(Color.parseColor("#05467c"));
                         break;
                     case 9:
+                        fill.setBackgroundColor(Color.parseColor("#042d63"));
+                        break;
+                    case 10:
                         fill.setBackgroundColor(Color.parseColor("#042d63"));
                         break;
                 }
