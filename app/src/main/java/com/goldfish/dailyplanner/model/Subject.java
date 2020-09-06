@@ -1,26 +1,48 @@
 package com.goldfish.dailyplanner.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Subject {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @NonNull
+    @PrimaryKey
+    private String id;
     private String subject;
     private String content;
     private boolean checked;
     private Date time;
 
-    public Subject(int id, String subject, String content, boolean checked) {
+    public Subject(@NonNull String id, String subject, String content, boolean checked, Date time) {
         this.id = id;
         this.subject = subject;
         this.content = content;
         this.checked = checked;
-        this.time = new Date();
+        this.time = time;
+    }
+
+    @Ignore
+    public Subject(String id, String subject, String content, boolean checked, Date time, String string) {
+        this.id = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(time) + "-" + id;
+        this.subject = subject;
+        this.content = content;
+        this.checked = checked;
+        this.time = time;
+    }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public Date getTime() {
@@ -29,14 +51,6 @@ public class Subject {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSubject() {

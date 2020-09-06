@@ -24,7 +24,7 @@ public interface SubjectDao {
     void deleteSubject(Subject subject);
 
     @Query("DELETE FROM Subject WHERE id=:id")
-    void deleteSubject(int id);
+    void deleteSubject(String id);
 
     @Query("SELECT * FROM Subject")
     List<Subject> getSubjectList();
@@ -32,4 +32,6 @@ public interface SubjectDao {
     @Query("SELECT * FROM Subject WHERE time BETWEEN :from AND :to")
     List<Subject> getSubjectList(Date from, Date to);
 
+    @Query("SELECT time FROM Subject")
+    List<Date> getDateList();
 }

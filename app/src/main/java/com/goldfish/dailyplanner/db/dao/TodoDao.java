@@ -23,11 +23,14 @@ public interface TodoDao {
     void deleteTodo(Todo todo);
 
     @Query("DELETE FROM Todo WHERE id=:id")
-    void deleteTodo(int id);
+    void deleteTodo(String id);
 
     @Query("SELECT * FROM Todo")
     List<Todo> getTodoList();
 
     @Query("SELECT * FROM Todo WHERE time BETWEEN :from AND :to")
     List<Todo> getTodoList(Date from, Date to);
+
+    @Query("SELECT time FROM Todo")
+    List<Date> getDateList();
 }

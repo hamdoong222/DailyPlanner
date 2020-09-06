@@ -1,25 +1,24 @@
 package com.goldfish.dailyplanner.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 @Entity
-public class Comment {
+public class Achievement {
     @NonNull
     @PrimaryKey
     private String id;
-    private String content;
+    private int progress;
     private Date time;
 
-    public Comment(Date time, String content) {
+    public Achievement(Date time, int progress) {
         this.id = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(time);
-        this.content = content;
+        this.progress = progress;
         this.time = time;
     }
 
@@ -39,11 +38,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public int getProgress() {
+        return progress;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

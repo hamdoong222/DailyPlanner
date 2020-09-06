@@ -131,6 +131,13 @@
                     android:textColor="@android:color/holo_blue_dark"
                     android:textSize="35dp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:onClick="onClickCalendar"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@android:drawable/ic_menu_my_calendar"/>
             </LinearLayout>
             <View
                 android:layout_marginLeft="10dp"
@@ -351,6 +358,7 @@
                 android:layout_marginTop="30dp">
 
                 <EditText
+                    android:id="@+id/comment"
                     android:layout_width="380dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/comment"

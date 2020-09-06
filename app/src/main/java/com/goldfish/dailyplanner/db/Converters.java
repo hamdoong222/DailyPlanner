@@ -1,4 +1,4 @@
-package com.goldfish.dailyplanner.db.dao;
+package com.goldfish.dailyplanner.db;
 
 import java.util.Date;
 

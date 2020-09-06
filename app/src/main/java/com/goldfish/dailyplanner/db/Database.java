@@ -1,13 +1,21 @@
-package com.goldfish.dailyplanner.db.dao;
+package com.goldfish.dailyplanner.db;
 
 import android.app.Activity;
+import android.provider.CalendarContract;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.goldfish.dailyplanner.R;
+import com.goldfish.dailyplanner.model.Achievement;
 import com.goldfish.dailyplanner.model.Comment;
 import com.goldfish.dailyplanner.model.Subject;
 import com.goldfish.dailyplanner.model.Todo;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.room.Room;
 
@@ -62,10 +70,11 @@ public class Database {
         }).start();
     }
 
-    public void deleteSubject(final int id) {
+    public void deleteSubject(final int index, Date date) {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String id = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date) + "-" + index;
                 appDatabase.subjectDao().deleteSubject(id);
             }
         }).start();
@@ -128,10 +137,11 @@ public class Database {
         }).start();
     }
 
-    public void deleteTodo(final int id) {
+    public void deleteTodo(final int index, Date date) {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String id = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date) + "-" + index;
                 appDatabase.todoDao().deleteTodo(id);
             }
         }).start();
@@ -197,6 +207,56 @@ public class Database {
                     }
                 });
             }
+        }).start();
+    }
+
+    public void insertAchievement(final Achievement achievement) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.achievementDao().insertAchievement(achievement);
+            }
+        }).start();
+    }
+
+    public void getAchievement(final Date from, final Date to, final ResultCallBack<Achievement> callBack) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Achievement achievement = appDatabase.achievementDao().getAchievement(from, to);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.run(achievement);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void getDateList(final ResultCallBack<List<EventDay>> callBack) {
+        new Thread(() -> {
+            ArrayList<Date> dates = new ArrayList<>();
+
+            dates.addAll(appDatabase.subjectDao().getDateList());
+            dates.addAll(appDatabase.todoDao().getDateList());
+
+            ArrayList<EventDay> calendarList = new ArrayList<>();
+
+            for (Date date : dates) {
+                if (date != null) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendarList.add(new EventDay(calendar, R.mipmap.ic_launcher));
+                }
+            }
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callBack.run(calendarList);
+                }
+            });
         }).start();
     }
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.goldfish.dailyplanner.db.dao.Database;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.DatePicker;
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+import com.goldfish.dailyplanner.db.Database;
+import com.goldfish.dailyplanner.model.Achievement;
+import com.goldfish.dailyplanner.model.Comment;
 import com.goldfish.dailyplanner.model.Subject;
 import com.goldfish.dailyplanner.model.Todo;
 
@@ -39,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView Date;
     private TextView Day;
     private TextView Percent;
+    private TextView comment;
+
+    private Date currentDate =  new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +58,32 @@ public class MainActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.layout6);
 
+
         initButton();
 
-        loadSubject();
-        loadTodo();
+        initViews();
+    }
 
-        setNow();
+    private void initViews() {
+        Pair<Date, Date> datePair = getDate(currentDate);
+        loadComment(datePair.first, datePair.second);
+        loadSubject(datePair.first, datePair.second);
+        loadTodo(datePair.first, datePair.second);
+        setNow(currentDate);
+
+        database.getAchievement(datePair.first, datePair.second, result -> {
+            if (result != null) {
+                fillUp(result.getProgress());
+            } else {
+                fillUp(0);
+            }
+        });
     }
 
     private void initButton() {
         View todoLayout = findViewById(R.id.layout_todo_button);
         View subjectLayout = findViewById(R.id.layout_subject_button);
+        comment = findViewById(R.id.comment);
 
         Button todoRemoveBtn = todoLayout.findViewById(R.id.remove);
         Button todoAddBtn = todoLayout.findViewById(R.id.add);
@@ -70,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 database.insertTodoList(createTodoFromView());
-                database.deleteTodo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount());
-                loadTodo();
+                database.deleteTodo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount(), currentDate);
+                Pair<Date, Date> datePair = getDate(currentDate);
+                loadTodo(datePair.first, datePair.second);
             }
         });
 
@@ -79,8 +105,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 database.insertTodoList(createTodoFromView());
-                database.insertTodoList(new Todo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount() + 1, false, ""));
-                loadTodo();
+                database.insertTodoList(new Todo(((LinearLayout)findViewById(R.id.todo_layout)).getChildCount() + 1 + "", false, "", currentDate, ""));
+                Pair<Date, Date> datePair = getDate(currentDate);
+                loadTodo(datePair.first, datePair.second);
             }
         });
 
@@ -88,8 +115,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 database.insertSubjectList(createSubjectFromView());
-                database.insertSubjectList(new Subject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount() + 1, "", "", false));
-                loadSubject();
+                database.insertSubjectList(new Subject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount() + 1 + "", "", "", false, currentDate, ""));
+                Pair<Date, Date> datePair = getDate(currentDate);
+                loadSubject(datePair.first, datePair.second);
             }
         });
 
@@ -97,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 database.insertSubjectList(createSubjectFromView());
-                database.deleteSubject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount());
-                loadSubject();
+                database.deleteSubject(((LinearLayout)findViewById(R.id.subject_layout)).getChildCount(), currentDate);
+                Pair<Date, Date> datePair = getDate(currentDate);
+                loadSubject(datePair.first, datePair.second);
             }
         });
     }
@@ -151,10 +180,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setNow(){
+    void setNow(Date time){
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ENGLISH);
-        Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
+        String dayOfTheWeek = sdf.format(time);
 
         linearLayout = findViewById(R.id.layout6);
         int len = linearLayout.getChildCount();
@@ -162,15 +190,20 @@ public class MainActivity extends AppCompatActivity {
             ImageView img = (ImageView) linearLayout.getChildAt(index);
             img.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    fillUp(linearLayout.indexOfChild(v));
+                    int index = linearLayout.indexOfChild(v);
+                    fillUp(index);
+                    database.insertAchievement(new Achievement(currentDate, index));
                 }
             });
         }
 
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int month = Calendar.getInstance().get(Calendar.MONTH)+1;
-        int date = Calendar.getInstance().get(Calendar.DATE);
-        int week = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int date =  calendar.get(Calendar.DATE);
+        int week = calendar.get(Calendar.WEEK_OF_MONTH);
 
         Year = findViewById(R.id.year);
         Month = findViewById(R.id.month);
@@ -194,8 +227,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        save();
+    }
+
+    private void save() {
         database.insertTodoList(createTodoFromView());
         database.insertSubjectList(createSubjectFromView());
+        database.insertComment(new Comment(currentDate, comment.getText().toString()));
     }
 
     @Override
@@ -220,46 +258,50 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
 
-    private void loadSubject() {
-        database.getSubjectList(new Database.ResultCallBack<List<Subject>>() {
-            @Override
-            public void run(List<Subject> result) {
-                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.subject_layout);
-                linearLayout.removeAllViews();
+    private void loadSubject(Date from, Date to) {
+        database.getSubjectList(from, to, result -> {
+            LinearLayout linearLayout = findViewById(R.id.subject_layout);
+            linearLayout.removeAllViews();
 
-                for (Subject subject : result) {
-                    RelativeLayout subjectLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_subject_item, null);
-                    linearLayout.addView(subjectLayout);
+            for (Subject subject : result) {
+                RelativeLayout subjectLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_subject_item, null);
+                linearLayout.addView(subjectLayout);
 
-                    TextView subjectTextView = subjectLayout.findViewById(R.id.subject);
-                    TextView goalTextView = subjectLayout.findViewById(R.id.goal);
-                    CheckBox checkBox = subjectLayout.findViewById(R.id.checkbox);
+                TextView subjectTextView = subjectLayout.findViewById(R.id.subject);
+                TextView goalTextView = subjectLayout.findViewById(R.id.goal);
+                CheckBox checkBox = subjectLayout.findViewById(R.id.checkbox);
 
-                    subjectTextView.setText(subject.getSubject());
-                    goalTextView.setText(subject.getContent());
-                    checkBox.setChecked(subject.isChecked());
-                }
+                subjectTextView.setText(subject.getSubject());
+                goalTextView.setText(subject.getContent());
+                checkBox.setChecked(subject.isChecked());
             }
         });
     }
 
-    private void loadTodo() {
-        database.getTodoList(new Database.ResultCallBack<List<Todo>>() {
-            @Override
-            public void run(List<Todo> result) {
-                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.todo_layout);
-                linearLayout.removeAllViews();
+    private void loadTodo(Date from, Date to) {
+        database.getTodoList(from, to, result -> {
+            LinearLayout linearLayout = findViewById(R.id.todo_layout);
+            linearLayout.removeAllViews();
 
-                for (Todo todo : result) {
-                    RelativeLayout todoLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_todo_item, null);
-                    linearLayout.addView(todoLayout);
+            for (Todo todo : result) {
+                RelativeLayout todoLayout = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_todo_item, null);
+                linearLayout.addView(todoLayout);
 
-                    TextView contentTextView = todoLayout.findViewById(R.id.content);
-                    CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
+                TextView contentTextView = todoLayout.findViewById(R.id.content);
+                CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
 
-                    contentTextView.setText(todo.getContent());
-                    checkBox.setChecked(todo.isChecked());
-                }
+                contentTextView.setText(todo.getContent());
+                checkBox.setChecked(todo.isChecked());
+            }
+        });
+    }
+
+    private void loadComment(Date from, Date to) {
+        database.getComment(from, to, result -> {
+            if (result != null) {
+                comment.setText(result.getContent());
+            } else {
+                comment.setText("");
             }
         });
     }
@@ -273,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
             TextView contentTextView = todoLayout.findViewById(R.id.content);
             CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
 
-            todoList.add(new Todo(index + 1, checkBox.isChecked(), contentTextView.getText().toString()));
+            todoList.add(new Todo(index + 1 + "", checkBox.isChecked(), contentTextView.getText().toString(), new Date(currentDate.getTime()), ""));
         }
 
         return todoList;
@@ -289,10 +331,48 @@ public class MainActivity extends AppCompatActivity {
             TextView goalTextView = todoLayout.findViewById(R.id.goal);
             CheckBox checkBox = todoLayout.findViewById(R.id.checkbox);
 
-            subjectList.add(new Subject(index + 1, subjectTextView.getText().toString(), goalTextView.getText().toString(), checkBox.isChecked()));
+            subjectList.add(new Subject(index + 1 + "", subjectTextView.getText().toString(), goalTextView.getText().toString(), checkBox.isChecked(), new Date(currentDate.getTime()), ""));
         }
 
         return subjectList;
     }
 
+    public void onClickCalendar(View view) {
+        save();
+
+        OnSelectDateListener listener = calendars -> {
+            currentDate = calendars.get(0).getTime();
+            initViews();
+        };
+
+        database.getDateList(result -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
+
+            DatePickerBuilder builder = new DatePickerBuilder(MainActivity.this, listener)
+                    .pickerType(CalendarView.ONE_DAY_PICKER)
+                    .setDate(calendar)
+                    .setEvents(result);
+
+            DatePicker datePicker = builder.build();
+            datePicker.show();
+            });
+
+    }
+
+    private Pair<Date, Date> getDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(date.getTime()));
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(new Date(date.getTime()));
+        calendar2.set(Calendar.HOUR, 23);
+        calendar2.set(Calendar.MINUTE, 59);
+        calendar2.set(Calendar.SECOND, 59);
+
+        return Pair.create(calendar.getTime(), calendar2.getTime());
+    }
 }
