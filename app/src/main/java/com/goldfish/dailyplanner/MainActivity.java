@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             if (result != null) {
                 fillUp(result.getProgress());
             } else {
-                fillUp(0);
+                fillUp(-1);
             }
         });
     }
