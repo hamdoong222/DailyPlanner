@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.goldfish.dailyplanner.db.dao.Database;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.layout6);
         int len = linearLayout.getChildCount();
-        for(int index=0 ; index<len-1 ; index++){
+        for(int index=0 ; index<len ; index++){
             ImageView img = (ImageView) linearLayout.getChildAt(index);
             img.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
