@@ -85,7 +85,7 @@
             </LinearLayout>
             <View
                 android:layout_marginLeft="10dp"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="1dp"
                 android:background="@android:color/black" />
             <LinearLayout
@@ -154,13 +154,23 @@
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/layout3"
                 android:layout_width="390dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/layout2"
                 android:background="#9cdae5">
-
                 <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Check"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -189,13 +199,23 @@
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/layout41"
                 android:layout_width="390dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/todo_layout"
                 android:background="#9cdae5">
-
                 <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Check"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -205,22 +225,15 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="15dp"
                     android:text="Goal"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="180dp"
-                    android:text="Check"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,13 +245,12 @@
                 android:orientation="vertical">
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layout5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/subject_layout"
                 android:layout_marginTop="30dp">
-
                 <TextView
                     android:id="@+id/achievement"
                     android:layout_width="wrap_content"
@@ -248,107 +260,122 @@
                     android:textColor="@android:color/black"
                     android:textSize="25dp"
                     android:textStyle="bold" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/layout6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout5">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:padding="1dp"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image" />
-
-                <ImageView
-
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:padding="1dp"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:cropToPadding="true"
-                    android:background="@drawable/border_image"/>
-
                 <TextView
                     android:gravity="center_vertical"
                     android:id="@+id/percent"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
                     android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout5">
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/layout6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout"
+                    android:layout_gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:scaleType="centerCrop"
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true" />
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true"/>
+
+                    <ImageView
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:cropToPadding="true"/>
+
+                </LinearLayout>
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/layout7"
@@ -374,6 +401,23 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.gms.ads.AdView
+                    android:layout_gravity="center"
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-7732840744984058/7847208075">
+                </com.google.android.gms.ads.AdView>
+
+            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>

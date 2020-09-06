@@ -1,8 +1,13 @@
 package com.goldfish.dailyplanner;
 
-import android.content.Context;
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.goldfish.dailyplanner.db.dao.Database;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
@@ -49,11 +57,26 @@ public class MainActivity extends AppCompatActivity {
     private TextView comment;
 
     private Date currentDate =  new Date();
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        //addMob
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        //Database
         database = Database.getInstance(this);
 
         linearLayout = findViewById(R.id.layout6);
@@ -70,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         loadSubject(datePair.first, datePair.second);
         loadTodo(datePair.first, datePair.second);
         setNow(currentDate);
-
         database.getAchievement(datePair.first, datePair.second, result -> {
             if (result != null) {
                 fillUp(result.getProgress());
@@ -137,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         String per = (partition + 1) * 10 + "%";
         Percent.setText(per);
         int len = linearLayout.getChildCount();
-        for(int index = 0 ; index<len-1 ; index++){
+        for(int index = 0 ; index<len ; index++){
             if(index <= partition){
                 ImageView fill = (ImageView) linearLayout.getChildAt(index);
                 switch (index){
