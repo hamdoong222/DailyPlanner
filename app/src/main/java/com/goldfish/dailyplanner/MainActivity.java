@@ -60,19 +60,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //addMob
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        //Database
         database = Database.getInstance(this);
 
         linearLayout = findViewById(R.id.layout6);
-
         initButton();
-
         loadSubject();
         loadTodo();
-
         setNow();
     }
 
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         String per = (partition + 1) * 10 + "%";
         Percent.setText(per);
         int len = linearLayout.getChildCount();
-        for(int index = 0 ; index<len-1 ; index++){
+        for(int index = 0 ; index<len ; index++){
             if(index <= partition){
                 ImageView fill = (ImageView) linearLayout.getChildAt(index);
                 switch (index){
