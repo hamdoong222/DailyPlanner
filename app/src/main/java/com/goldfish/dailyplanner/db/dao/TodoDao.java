@@ -1,6 +1,5 @@
-package com.goldfish.dailyplanner.dao;
+package com.goldfish.dailyplanner.db.dao;
 
-import com.goldfish.dailyplanner.model.Subject;
 import com.goldfish.dailyplanner.model.Todo;
 
 import java.util.Date;

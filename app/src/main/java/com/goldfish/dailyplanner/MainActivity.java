@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.goldfish.dailyplanner.dao.Database;
+import com.goldfish.dailyplanner.db.dao.Database;
 import com.goldfish.dailyplanner.model.Subject;
 import com.goldfish.dailyplanner.model.Todo;
 
